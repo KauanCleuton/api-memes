@@ -34,7 +34,6 @@ app.post('/memes', upload.single('image'), async (req, res) => {
     const canvas = (0, canvas_1.createCanvas)(450, 450);
     const ctx = canvas.getContext('2d');
     const image = await (0, canvas_1.loadImage)(imagePath);
-    // Calcula o tamanho da imagem para não distorcê-la
     const aspectRatio = image.width / image.height;
     const maxWidth = 450;
     const maxHeight = 450;
@@ -45,7 +44,7 @@ app.post('/memes', upload.single('image'), async (req, res) => {
         width = height * aspectRatio;
     }
     ctx.drawImage(image, 0, 0, width, height);
-    ctx.font = '30px YourCustomFont';
+    ctx.font = '30px Roboto';
     ctx.fillStyle = 'white';
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 3;
