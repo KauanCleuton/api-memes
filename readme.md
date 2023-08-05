@@ -1,8 +1,6 @@
 
-<div style="background-color: red; padding: 20px; text-align: center; color: red ">
-  <h1>API de Memes</h1>
-  <p>Bem-vindo à API de Memes! Esta é uma API simples desenvolvida em Node.js que permite criar e listar memes. Crie seus próprios memes personalizados, adicionando uma imagem divertida e uma legenda única que fará todos rirem.</p>
-</div>
+**API de Memes**
+Bem-vindo à API de Memes! Esta é uma API simples desenvolvida em Node.js que permite criar e listar memes. Crie seus próprios memes personalizados, adicionando uma imagem divertida e uma legenda única que fará todos rirem.
 
 ## Principais recursos
 
