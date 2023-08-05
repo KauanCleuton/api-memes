@@ -1,10 +1,8 @@
-Claro! Abaixo está uma descrição para o README do projeto da API de criação e listagem de memes:
-
 #API de Criação e Listagem de Memes
 
 Esta é uma API simples desenvolvida em Node.js e Express que permite criar e listar memes. Os memes consistem em uma imagem e uma legenda associada.
 
-##Funcionalidades
+#Funcionalidades
 
 - Criar um novo meme: Através de uma requisição POST para a rota '/memes', é possível enviar uma imagem e uma legenda para criar um novo meme.
 
@@ -32,7 +30,7 @@ ou, caso esteja utilizando o yarn:
 yarn install
 ```
 
-## Como usar
+#Como usar
 
 1. Inicie o servidor executando o comando:
 
@@ -44,11 +42,11 @@ node index.js
 
 3. Use o Insomnia ou qualquer outra ferramenta para enviar requisições HTTP para a API.
 
-## Endpoints
+#Endpoints
 
 - **POST /memes:** Cria um novo meme com a imagem e a legenda enviadas no corpo da requisição.
 
 - **GET /memes:** Retorna uma lista com todos os memes cadastrados.
 
-## Autor
+#Autor
 Kauan Cleuton
