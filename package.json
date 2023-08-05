@@ -1,0 +1,21 @@
+{
+  "name": "api-memes",
+  "version": "1.0.0",
+  "description": "API simples em NodeJS e Express que permite criar e gerar memes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "api-memes"
+  },
+  "author": "KauanCleuton",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.4.8",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.6"
+  }
+}
