@@ -44,7 +44,6 @@ app.post('/memes', upload.single('image'), async (req, res) => {
 
   const image = await loadImage(imagePath);
 
-  // Calcula o tamanho da imagem para não distorcê-la
   const aspectRatio = image.width / image.height;
   const maxWidth = 450;
   const maxHeight = 450;
