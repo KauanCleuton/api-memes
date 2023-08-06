@@ -1,0 +1,60 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de Memes",
+      "version": "1.0.0",
+      "description": "Documentação da API de Memes"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3333"
+      }
+    ],
+    "paths": {
+      "/memes": {
+        "post": {
+          "summary": "Criar um novo meme.",
+          "description": "Cria um novo meme com uma imagem e uma legenda.",
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "image": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "Imagem do meme a ser enviada (formato: jpg, jpeg ou png)."
+                    },
+                    "caption": {
+                      "type": "string",
+                      "description": "Legenda do meme."
+                    }
+                  },
+                  "required": ["image", "caption"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Meme criado com sucesso."
+            },
+            "400": {
+              "description": "Requisição inválida. Verifique se todos os campos foram preenchidos corretamente."
+            }
+          }
+        },
+        "get": {
+          "summary": "Listar memes.",
+          "description": "Retorna a lista de memes criados.",
+          "responses": {
+            "200": {
+              "description": "Lista de memes."
+            }
+          }
+        }
+      }
+    }
+  }
+  

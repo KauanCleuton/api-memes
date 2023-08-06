@@ -2,11 +2,19 @@ import express, { Request, Response } from 'express';
 import multer from 'multer';
 import cors from 'cors';
 import path from 'path';
-const app = express();
 import { createCanvas, loadImage, registerFont } from 'canvas';
-import { createWriteStream } from 'node:fs';
+import { createWriteStream } from 'fs';
 
-registerFont('fonts/Roboto-Bold.ttf', { family: 'Roboto'});
+const swaggerDocumentPath = path.resolve(__dirname, 'swagger.json');
+const swaggerDocument = require(swaggerDocumentPath);
+
+const swaggerUi = require('swagger-ui-express');
+
+const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+registerFont('fonts/Roboto-Bold.ttf', { family: 'Roboto' });
 
 interface INewName {
   id: number;
@@ -57,18 +65,48 @@ app.post('/memes', upload.single('image'), async (req, res) => {
 
   ctx.drawImage(image, 0, 0, width, height);
 
-  ctx.font = '30px Roboto'; 
+  ctx.font = '30px Roboto';
   ctx.fillStyle = 'white';
-  ctx.strokeStyle = 'black'; 
-  ctx.lineWidth = 3; 
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = 3;
   ctx.textAlign = 'center';
-  ctx.textBaseline = 'bottom'; 
+  ctx.textBaseline = 'bottom';
+
+  const lineHeight = 40; // Espaçamento entre as linhas
+
+  const wrapText = (text: string, maxWidth: number): string[] => {
+    const words = text.split(' ');
+    const lines: string[] = [];
+    let currentLine = '';
+
+    for (const word of words) {
+      const testLine = currentLine ? `${currentLine} ${word}` : word;
+      const { width } = ctx.measureText(testLine);
+
+      if (width > maxWidth) {
+        lines.push(currentLine);
+        currentLine = word;
+      } else {
+        currentLine = testLine;
+      }
+    }
+
+    lines.push(currentLine);
+
+    return lines;
+  };
+
+  const lines = wrapText(caption, maxWidth - 40);
+
+  const totalTextHeight = lines.length * lineHeight;
   const textX = width / 2;
-  const textY = height - 20; 
+  const textY = height - totalTextHeight - 20; // Posiciona o texto na parte inferior da imagem
 
-
-  ctx.strokeText(caption, textX, textY);
-  ctx.fillText(caption, textX, textY);
+  lines.forEach((line, index) => {
+    const y = textY + index * lineHeight;
+    ctx.strokeText(line, textX, y);
+    ctx.fillText(line, textX, y);
+  });
 
   const outputImagePath = `${imagePath}-with-caption.png`;
   const out = createWriteStream(outputImagePath);
@@ -87,8 +125,6 @@ app.post('/memes', upload.single('image'), async (req, res) => {
     res.status(201).json(newMeme);
   });
 });
-
-
 
 app.get('/memes', (request: Request, response: Response) => {
   response.json(memes);

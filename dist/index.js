@@ -7,9 +7,13 @@ const express_1 = __importDefault(require("express"));
 const multer_1 = __importDefault(require("multer"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
-const app = (0, express_1.default)();
 const canvas_1 = require("canvas");
-const node_fs_1 = require("node:fs");
+const fs_1 = require("fs");
+const swaggerDocumentPath = path_1.default.resolve(__dirname, 'swagger.json');
+const swaggerDocument = require(swaggerDocumentPath);
+const swaggerUi = require('swagger-ui-express');
+const app = (0, express_1.default)();
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 (0, canvas_1.registerFont)('fonts/Roboto-Bold.ttf', { family: 'Roboto' });
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
@@ -50,12 +54,36 @@ app.post('/memes', upload.single('image'), async (req, res) => {
     ctx.lineWidth = 3;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
+    const lineHeight = 40; // Espaçamento entre as linhas
+    const wrapText = (text, maxWidth) => {
+        const words = text.split(' ');
+        const lines = [];
+        let currentLine = '';
+        for (const word of words) {
+            const testLine = currentLine ? `${currentLine} ${word}` : word;
+            const { width } = ctx.measureText(testLine);
+            if (width > maxWidth) {
+                lines.push(currentLine);
+                currentLine = word;
+            }
+            else {
+                currentLine = testLine;
+            }
+        }
+        lines.push(currentLine);
+        return lines;
+    };
+    const lines = wrapText(caption, maxWidth - 40);
+    const totalTextHeight = lines.length * lineHeight;
     const textX = width / 2;
-    const textY = height - 20;
-    ctx.strokeText(caption, textX, textY);
-    ctx.fillText(caption, textX, textY);
+    const textY = height - totalTextHeight - 20; // Posiciona o texto na parte inferior da imagem
+    lines.forEach((line, index) => {
+        const y = textY + index * lineHeight;
+        ctx.strokeText(line, textX, y);
+        ctx.fillText(line, textX, y);
+    });
     const outputImagePath = `${imagePath}-with-caption.png`;
-    const out = (0, node_fs_1.createWriteStream)(outputImagePath);
+    const out = (0, fs_1.createWriteStream)(outputImagePath);
     const stream = canvas.createPNGStream();
     stream.pipe(out);
     out.on('finish', () => {
