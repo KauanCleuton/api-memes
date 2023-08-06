@@ -3,14 +3,14 @@
     "target": "ES2019",
     "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
   "include": [
-    "index.ts",
-    "swagger.json"
+    "src/**/*.ts",
+    "src/swagger.json"
   ],
   "exclude": ["node_modules"]
 }

@@ -9,10 +9,13 @@ const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const canvas_1 = require("canvas");
 const fs_1 = require("fs");
+const app = (0, express_1.default)();
+app.set('view engine', 'ejs');
+app.set('views', path_1.default.join(__dirname, 'views'));
+app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 const swaggerDocumentPath = path_1.default.resolve(__dirname, 'swagger.json');
 const swaggerDocument = require(swaggerDocumentPath);
 const swaggerUi = require('swagger-ui-express');
-const app = (0, express_1.default)();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 (0, canvas_1.registerFont)('fonts/Roboto-Bold.ttf', { family: 'Roboto' });
 const storage = multer_1.default.diskStorage({
@@ -26,8 +29,12 @@ const storage = multer_1.default.diskStorage({
 });
 const upload = (0, multer_1.default)({ storage: storage });
 app.use((0, cors_1.default)());
+app.use('/uploads', express_1.default.static('uploads'));
 app.use(express_1.default.json());
 const memes = [];
+app.get('/', (req, res) => {
+    res.render('index', { memes });
+});
 app.post('/memes', upload.single('image'), async (req, res) => {
     var _a;
     const { caption } = req.body;
@@ -35,12 +42,12 @@ app.post('/memes', upload.single('image'), async (req, res) => {
     if (!caption || !imagePath) {
         return res.status(400).json({ message: 'Caption and image are required' });
     }
-    const canvas = (0, canvas_1.createCanvas)(450, 450);
+    const canvas = (0, canvas_1.createCanvas)(600, 600);
     const ctx = canvas.getContext('2d');
     const image = await (0, canvas_1.loadImage)(imagePath);
     const aspectRatio = image.width / image.height;
-    const maxWidth = 450;
-    const maxHeight = 450;
+    const maxWidth = 600;
+    const maxHeight = 600;
     let width = maxWidth;
     let height = width / aspectRatio;
     if (height > maxHeight) {
@@ -48,26 +55,27 @@ app.post('/memes', upload.single('image'), async (req, res) => {
         width = height * aspectRatio;
     }
     ctx.drawImage(image, 0, 0, width, height);
-    ctx.font = '30px Roboto';
+    ctx.font = '40px Roboto';
     ctx.fillStyle = 'white';
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 3;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
-    const lineHeight = 40; // Espaçamento entre as linhas
+    const lineHeight = 27;
     const wrapText = (text, maxWidth) => {
-        const words = text.split(' ');
+        const words = text.split('');
         const lines = [];
-        let currentLine = '';
-        for (const word of words) {
-            const testLine = currentLine ? `${currentLine} ${word}` : word;
+        let currentLine = words[0];
+        for (let i = 1; i < words.length; i++) {
+            const word = words[i];
+            const testLine = currentLine + '' + word;
             const { width } = ctx.measureText(testLine);
-            if (width > maxWidth) {
-                lines.push(currentLine);
-                currentLine = word;
+            if (width <= maxWidth) {
+                currentLine = testLine;
             }
             else {
-                currentLine = testLine;
+                lines.push(currentLine);
+                currentLine = word;
             }
         }
         lines.push(currentLine);
@@ -76,7 +84,7 @@ app.post('/memes', upload.single('image'), async (req, res) => {
     const lines = wrapText(caption, maxWidth - 40);
     const totalTextHeight = lines.length * lineHeight;
     const textX = width / 2;
-    const textY = height - totalTextHeight - 20; // Posiciona o texto na parte inferior da imagem
+    const textY = height - totalTextHeight - 20;
     lines.forEach((line, index) => {
         const y = textY + index * lineHeight;
         ctx.strokeText(line, textX, y);

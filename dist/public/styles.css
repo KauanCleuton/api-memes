@@ -1,0 +1,123 @@
+html {
+  scroll-behavior: smooth;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+form input[type="text"],
+form input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+form button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.gallery {
+  max-width: 900px;
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-grow: 1;
+  gap: 30px;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.meme {
+  width: auto;
+  height: auto; 
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.meme h3 {
+  font-size: 16px;
+}
+
+.meme img {
+  width: 100%; 
+  display: flex;
+  max-height: 150px;
+  object-fit: contain; 
+  border-radius: 4px;
+  align-self: center;
+}
+
+::-webkit-scrollbar {
+  width: auto; 
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #141414; 
+  border-radius: 6px; 
+}
+
+
+::-webkit-scrollbar.horizontal {
+  height: 12px; 
+}
+
+::-webkit-scrollbar-thumb.horizontal {
+  background: #888; 
+  border-radius: 6px;
+}

@@ -5,12 +5,15 @@ import path from 'path';
 import { createCanvas, loadImage, registerFont } from 'canvas';
 import { createWriteStream } from 'fs';
 
+const app = express();
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+
 const swaggerDocumentPath = path.resolve(__dirname, 'swagger.json');
 const swaggerDocument = require(swaggerDocumentPath);
 
 const swaggerUi = require('swagger-ui-express');
-
-const app = express();
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -35,9 +38,14 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.use(cors());
+app.use('/uploads', express.static('uploads'));
 app.use(express.json());
 
 const memes: INewName[] = [];
+
+app.get('/', (req: Request, res: Response) => {
+  res.render('index', { memes });
+});
 
 app.post('/memes', upload.single('image'), async (req: Request, res: Response) => {
   const { caption } = req.body;
@@ -47,14 +55,14 @@ app.post('/memes', upload.single('image'), async (req: Request, res: Response) =
     return res.status(400).json({ message: 'Caption and image are required' });
   }
 
-  const canvas = createCanvas(450, 450);
+  const canvas = createCanvas(600, 600);
   const ctx = canvas.getContext('2d');
 
   const image = await loadImage(imagePath);
 
   const aspectRatio = image.width / image.height;
-  const maxWidth = 450;
-  const maxHeight = 450;
+  const maxWidth = 600;
+  const maxHeight = 600;
   let width = maxWidth;
   let height = width / aspectRatio;
 
@@ -65,34 +73,35 @@ app.post('/memes', upload.single('image'), async (req: Request, res: Response) =
 
   ctx.drawImage(image, 0, 0, width, height);
 
-  ctx.font = '30px Roboto';
+  ctx.font = '40px Roboto';
   ctx.fillStyle = 'white';
   ctx.strokeStyle = 'black';
   ctx.lineWidth = 3;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
 
-  const lineHeight = 40; 
+  const lineHeight = 27;
 
   const wrapText = (text: string, maxWidth: number): string[] => {
-    const words = text.split(' ');
+    const words = text.split('');
     const lines: string[] = [];
-    let currentLine = '';
-
-    for (const word of words) {
-      const testLine = currentLine ? `${currentLine} ${word}` : word;
+    let currentLine = words[0];
+  
+    for (let i = 1; i < words.length; i++) {
+      const word = words[i];
+      const testLine = currentLine + '' + word;
       const { width } = ctx.measureText(testLine);
-
-      if (width > maxWidth) {
+  
+      if (width <= maxWidth) {
+        currentLine = testLine;
+      } else {
         lines.push(currentLine);
         currentLine = word;
-      } else {
-        currentLine = testLine;
       }
     }
-
+  
     lines.push(currentLine);
-
+  
     return lines;
   };
 
