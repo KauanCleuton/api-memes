@@ -30,7 +30,7 @@ Bem-vindo à API de Memes! Esta é uma API simples desenvolvida em Node.js que p
 1. Clone este repositório em sua máquina:
 
 ```
-git clone https://github.com/seu-usuario/api-memes.git
+git clone https://github.com/KauanCleuton/api-memes.git
 ```
 
 2. Acesse a pasta do projeto:
