@@ -72,7 +72,7 @@ app.post('/memes', upload.single('image'), async (req: Request, res: Response) =
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
 
-  const lineHeight = 40; // Espaçamento entre as linhas
+  const lineHeight = 40; 
 
   const wrapText = (text: string, maxWidth: number): string[] => {
     const words = text.split(' ');
@@ -100,7 +100,7 @@ app.post('/memes', upload.single('image'), async (req: Request, res: Response) =
 
   const totalTextHeight = lines.length * lineHeight;
   const textX = width / 2;
-  const textY = height - totalTextHeight - 20; // Posiciona o texto na parte inferior da imagem
+  const textY = height - totalTextHeight - 20;
 
   lines.forEach((line, index) => {
     const y = textY + index * lineHeight;
