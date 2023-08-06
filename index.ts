@@ -39,7 +39,7 @@ app.use(express.json());
 
 const memes: INewName[] = [];
 
-app.post('/memes', upload.single('image'), async (req, res) => {
+app.post('/memes', upload.single('image'), async (req: Request, res: Response) => {
   const { caption } = req.body;
   const imagePath = req.file?.path;
 
