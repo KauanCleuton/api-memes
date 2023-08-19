@@ -74,15 +74,14 @@ h2 {
 
 .meme {
   width: auto;
-  height: auto; 
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-content: center;
   gap: 20px;
 }
 
@@ -91,12 +90,11 @@ h2 {
 }
 
 .meme img {
-  width: 100%; 
-  display: flex;
-  max-height: 150px;
+  max-height: 250px;
   object-fit: contain; 
   border-radius: 4px;
-  align-self: center;
+  margin: 0 auto;
+  grid-column: 1 / 1;
 }
 
 ::-webkit-scrollbar {
