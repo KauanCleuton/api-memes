@@ -1,4 +1,4 @@
-<img src="/src/public/image/banner.png" alt="logo da api" style="object-fit: cover;">
+<img src="/src/public/image/banner2.png" alt="logo da api" style="object-fit: cover;">
 
 <h1>API de Memes MegeGren</h1>
 
