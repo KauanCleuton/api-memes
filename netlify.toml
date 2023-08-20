@@ -1,0 +1,4 @@
+[build]
+  command = "node dist/index.js"  #
+  functions = "netlify/functions/" 
+  publish = "dist/" 
