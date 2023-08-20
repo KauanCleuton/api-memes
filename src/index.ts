@@ -11,8 +11,9 @@ const swaggerDocument = require(swaggerDocumentPath);
 const swaggerUi = require('swagger-ui-express');
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, '..', 'src', 'views'));
+app.use('/public', express.static(path.join(__dirname, '..', 'src', 'public')));
+app.use('/favicon.ico', express.static(path.join(__dirname, '..', 'src', 'public', 'favicon.ico')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(cors());
 app.use('/uploads', express.static('uploads'));

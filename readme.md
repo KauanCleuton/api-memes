@@ -1,7 +1,8 @@
+<img src="/src/public/image/android-chrome-192x192.png" alt="logo da api" width="192px" height="192px">
 
-<h1>API de Memes</h1>
+<h1>API de Memes MegeGren</h1>
 
-Bem-vindo à API de Memes! Esta é uma API simples desenvolvida em Node.js que permite criar e listar memes. Crie seus próprios memes personalizados, adicionando uma imagem divertida e uma legenda única que fará todos rirem.
+Bem-vindo à API de Memes MegeGren! Esta é uma API simples desenvolvida em Node.js que permite criar e listar memes. Crie seus próprios memes personalizados, adicionando uma imagem divertida e uma legenda única que fará todos rirem.
 
 ## Principais recursos
 
