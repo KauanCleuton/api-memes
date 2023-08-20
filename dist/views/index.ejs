@@ -19,18 +19,27 @@
     <br>
     <button type="submit" class="button-submit">Generate Meme</button>
   </form>
-
+  
   <h2>Generated Memes</h2>
   <div id="memes-container" class="gallery"></div>
-
+  <div class="popup" id="popup">
+    <div class="popup-content">
+        <button class="close" id="close">X</button>
+        <img class="meme-popup" id="meme-popup" src="" alt="Meme">
+        <a class="download-button" id="download-button" download="meme.jpg">Download</a>
+    </div>
+  </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const memesContainer = document.querySelector('#memes-container');
-      const buttonSubmit = document.querySelector(".button-submit");
-      const captionInput = document.getElementById('caption');
-      const imageInput = document.getElementById('image');
-
-      buttonSubmit.addEventListener('click', (event) => {
+    const memesContainer = document.querySelector('#memes-container');
+    const buttonSubmit = document.querySelector(".button-submit");
+    const captionInput = document.getElementById('caption');
+    const imageInput = document.getElementById('image');
+    const memePopup = document.getElementById('meme-popup');
+    const downloadButton = document.getElementById('download-button');
+    const popup = document.getElementById('popup');
+    const buttonClose = document.querySelector('#close')
+    buttonSubmit.addEventListener('click', (event) => {
         event.preventDefault();
 
         const formData = new FormData();
@@ -38,29 +47,44 @@
         formData.append('image', imageInput.files[0]);
 
         fetch('/memes', {
-          method: 'POST',
-          body: formData,
+            method: 'POST',
+            body: formData,
         })
-          .then((response) => {
+        .then((response) => {
             if (response.ok) {
-              return response.json();
+                return response.json();
             } else {
-              throw new Error('Failed to generate meme.');
+                throw new Error('Failed to generate meme.');
             }
-          })
-          .then((newMeme) => {
+        })
+        .then((newMeme) => {
             displayMeme(newMeme);
             captionInput.value = '';
             imageInput.value = '';
-          })
-          .catch((error) => {
+        })
+        .catch((error) => {
             console.error(error.message);
-          });
-      });
+        });
+    });
 
-      function displayMeme(meme) {
+    downloadButton.addEventListener('click', () => {
+        const downloadLink = document.createElement('a');
+        downloadLink.href = memePopup.src;
+        downloadLink.download = 'meme.jpg';
+        downloadLink.click();
+    });
+
+    popup.addEventListener('click', (event) => {
+        if (event.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
+    buttonClose.addEventListener('click', () => {
+      popup.style.display = 'none'
+    })
+    function displayMeme(meme) {
         const memeDiv = document.createElement('div');
-        memeDiv.classList.add('meme'); // Adiciona a classe .meme ao elemento div do meme
+        memeDiv.classList.add('meme');
         const captionHeading = document.createElement('h3');
         const memeImage = document.createElement('img');
 
@@ -71,8 +95,14 @@
         memeDiv.appendChild(captionHeading);
         memeDiv.appendChild(memeImage);
         memesContainer.appendChild(memeDiv);
-      }
-    });
+
+        memeImage.addEventListener('click', () => {
+            memePopup.src = meme.imagem;
+            popup.style.display = 'block';
+        });
+    }
+});
+
   </script>
 </body>
 

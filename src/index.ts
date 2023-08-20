@@ -73,7 +73,7 @@ app.post('/memes', upload.single('image'), async (req: Request, res: Response) =
 
   ctx.drawImage(image, 0, 0, width, height);
 
-  ctx.font = '40px Roboto';
+  ctx.font = '43px Roboto';
   ctx.fillStyle = 'white';
   ctx.strokeStyle = 'black';
   ctx.lineWidth = 3;

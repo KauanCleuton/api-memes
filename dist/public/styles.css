@@ -86,10 +86,11 @@ h2 {
 }
 
 .meme h3 {
-  font-size: 16px;
+  font-size: 0.9rem;
 }
 
 .meme img {
+  max-width: 100%;
   max-height: 250px;
   object-fit: contain; 
   border-radius: 4px;
@@ -118,4 +119,53 @@ h2 {
 ::-webkit-scrollbar-thumb.horizontal {
   background: #888; 
   border-radius: 6px;
+}
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.meme-popup {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.download-button {
+  display: block;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.close {
+  border: none;
+  color: #3498db;
+  font-size: 2.1rem;
+  background-color: transparent;
+  align-self: flex-end;
+  cursor: pointer;
 }
