@@ -1,4 +1,4 @@
-<img src="/src/public/image/android-chrome-192x192.png" alt="logo da api" width="100%" height="192px" style="object-fit: cover;">
+<img src="/src/public/image/android-chrome-192x192.png" alt="logo da api" width="300px" height="192px" style="object-fit: cover;">
 
 <h1>API de Memes MegeGren</h1>
 
