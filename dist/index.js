@@ -10,13 +10,16 @@ const path_1 = __importDefault(require("path"));
 const canvas_1 = require("canvas");
 const fs_1 = require("fs");
 const app = (0, express_1.default)();
-app.set('view engine', 'ejs');
-app.set('views', path_1.default.join(__dirname, 'views'));
-app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 const swaggerDocumentPath = path_1.default.resolve(__dirname, 'swagger.json');
 const swaggerDocument = require(swaggerDocumentPath);
 const swaggerUi = require('swagger-ui-express');
+app.set('view engine', 'ejs');
+app.set('views', path_1.default.join(__dirname, 'views'));
+app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use((0, cors_1.default)());
+app.use('/uploads', express_1.default.static('uploads'));
+app.use(express_1.default.json());
 (0, canvas_1.registerFont)('fonts/Roboto-Bold.ttf', { family: 'Roboto' });
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
@@ -28,9 +31,6 @@ const storage = multer_1.default.diskStorage({
     },
 });
 const upload = (0, multer_1.default)({ storage: storage });
-app.use((0, cors_1.default)());
-app.use('/uploads', express_1.default.static('uploads'));
-app.use(express_1.default.json());
 const memes = [];
 app.get('/', (req, res) => {
     res.render('index', { memes });

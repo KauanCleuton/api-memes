@@ -6,16 +6,17 @@ import { createCanvas, loadImage, registerFont } from 'canvas';
 import { createWriteStream } from 'fs';
 
 const app = express();
+const swaggerDocumentPath = path.resolve(__dirname, 'swagger.json');
+const swaggerDocument = require(swaggerDocumentPath);
+const swaggerUi = require('swagger-ui-express');
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
-
-const swaggerDocumentPath = path.resolve(__dirname, 'swagger.json');
-const swaggerDocument = require(swaggerDocumentPath);
-
-const swaggerUi = require('swagger-ui-express');
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(cors());
+app.use('/uploads', express.static('uploads'));
+app.use(express.json());
 
 registerFont('fonts/Roboto-Bold.ttf', { family: 'Roboto' });
 
@@ -36,10 +37,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-app.use(cors());
-app.use('/uploads', express.static('uploads'));
-app.use(express.json());
 
 const memes: INewName[] = [];
 
