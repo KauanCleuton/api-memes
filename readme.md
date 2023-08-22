@@ -1,14 +1,10 @@
-<img src="/src/public/image/banner2.png" alt="logo da api" style="object-fit: cover;">
+<h1>API de Memes</h1>
 
-<h1>API de Memes MegeGren</h1>
-
-Bem-vindo à API de Memes MegeGren! Esta é uma API simples desenvolvida em Node.js que permite criar e listar memes. Crie seus próprios memes personalizados, adicionando uma imagem divertida e uma legenda única que fará todos rirem.
+Bem-vindo à API de Memes MegeGren! Esta é uma API simples desenvolvida em Node.js que permite criar memes. Crie seus próprios memes personalizados, adicionando uma imagem divertida e uma legenda única que fará todos rirem.
 
 ## Principais recursos
 
 - Crie memes incríveis: Faça o upload de uma imagem engraçada e adicione uma legenda criativa para criar seus próprios memes exclusivos.
-
-- Listagem de memes: Acesse a lista de todos os memes criados e divirta-se com os memes compartilhados por outros usuários.
 
 - Fácil de usar: A API é projetada para ser simples e intuitiva, permitindo que você crie memes rapidamente.
 
